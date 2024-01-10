@@ -1,0 +1,99 @@
+﻿@{
+
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .okunan {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+            .okunan:hover {
+                background-color: #218838;
+            }
+
+        a {
+            display: inline-block;
+            margin-right: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h2>Dashboard</h2>
+            <a href="/Dashboard/ReadingHistory">Okuma Geçmişi</a>
+            <a href="/RecommendedBooks/Index">Önerilen Kitaplar</a>
+        </div>
+        
+
+        <p>En Yeniler</p>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="@item.ResimURL" class="card-img-top" alt="@item.Ad">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Ad</h5>
+                            <p class="card-text">@item.Yazar</p>
+                            <p class="card-text">@item.Konu </p>
+                            <p class="card-text">@item.Yayınevi</p>
+                            <p class="card-text">@item.YayınlanmaTarihi.ToString("dd.MM.yyyy")</p>
+
+                            <button class="okunan" onclick="addToReadingHistory(@item.KitapID)">Okundu</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function addToReadingHistory(bookId) {
+            $.post("/Dashboard/AddToReadingHistory", { bookId: bookId })
+                .done(function (data) {
+                    location.reload();
+                })
+                .fail(function (error) {
+                    console.error("Hata oluştu: " + error.responseText);
+                });
+        }
+    </script>
+</body>
+</html>

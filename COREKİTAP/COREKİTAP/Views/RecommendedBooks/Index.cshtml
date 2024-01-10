@@ -1,0 +1,43 @@
+﻿@model List<COREKİTAP.Models.Kitap>
+
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        </style>
+    </head>
+
+    <body>
+
+    
+
+<h2>Recommended Books</h2>
+@if (Model == null || !Model.Any())
+{
+    <p>No recommended books available.</p>
+}
+else
+{
+    <div style="display: flex;">
+        @foreach (var item in Model)
+        {
+            <div class="card" style="width: 18rem; margin-right: 10px; border:2px solid; border-radius:2px;">
+                <img src="@item.ResimURL" class="card-img-top" alt="@item.Ad">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Ad</h5>
+                    <p class="card-text">@item.Yazar</p>
+                    <p class=" card-text">@item.Konu</p>
+                    <p class="card-text">@item.Yayınevi</p>
+                    <p class="card-text">@item.YayınlanmaTarihi</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+</body>
+</html>
